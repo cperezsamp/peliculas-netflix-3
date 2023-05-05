@@ -49,7 +49,7 @@ class App extends React.Component {
     console.log('RENDER: ', this.state);
     return (
       <View style={this.styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Text>Peliculas</Text>
         {this.state.list.map(item => <Text>{ item.id}, {item.titulo}</Text>)}
         <StatusBar style="auto" />
       </View>
