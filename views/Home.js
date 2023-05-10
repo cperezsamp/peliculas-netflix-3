@@ -8,21 +8,23 @@ import {
   StatusBar,
   Image
 } from 'react-native';
-import { DATA } from "./mockData";
 import { db } from '../config/config_bbdd';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 
-const Item = ({ actor }) => (
+const Item = ({ actor, navigation }) => (
   <View style={styles.item}>
     <Text style={styles.title}>{actor.nombre}</Text>
     <Image
       style={styles.image}
       source={actor.imagen}
+      onClick={() =>
+        navigation.navigate('Detail', { nombre: actor.nombre })
+      }
     />
   </View>
 );
 
-const Home = () => {
+const Home = ({ navigation }) => {
 
   const [actores, setActores] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -51,24 +53,22 @@ const Home = () => {
 
   }, [])
 
-
-  if (loading) { console.log('LOADING TRUE') }
-  if (!loading) { console.log('LOADING FALSE') }
-
-  console.log('actores', actores[0]);
-
-
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}> Listado de actores de la Película XXXXX</Text>
-
+      <Text style={styles.title}> LO QUE EL VIENTO SE LLEVÓ </Text>
+      <View style={styles.imageWrapper}>
+        <Image
+          style={styles.imageFilm}
+          source={require("../assets/images/films/loqueelvientosellevo.jpeg")}
+        />
+      </View>
+      <Text style={styles.title}> ACTORES </Text>
       <FlatList
         numColumns={2}
         data={actores}
-        renderItem={({ item }) => <Item actor={item} />}
+        renderItem={({ item }) => <Item actor={item} navigation={navigation} />}
         keyExtractor={item => item.id}
       />
-
     </SafeAreaView>
   );
 };
@@ -78,6 +78,15 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
     backgroundColor: "#1F1F1F",
+  },
+  imageWrapper: {
+    width: "100%",
+    height: "50%",
+    padding: "10px"
+  },
+  imageFilm: {
+    width: "100%",
+    height: "100%",
   },
   flatlist: {
     flexDirection: 'column',
@@ -90,8 +99,8 @@ const styles = StyleSheet.create({
     height: 250
   },
   title: {
-    fontSize: 15,
-    color: "#E1E1E1"
+    fontSize: 17,
+    color: "#E1E1E1",
   },
   image: {
     width: '100%',
