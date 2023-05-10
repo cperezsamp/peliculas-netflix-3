@@ -8,7 +8,7 @@ const Item = ({ actor, navigation }) => (
     <Text style={styles.title}>{actor.nombre}</Text>
     <Image
       style={styles.image}
-      source={actor.imagen}
+      source={{ uri: actor.imagen} }
       onClick={() =>
         navigation.navigate('Detail', { nombre: actor.nombre })
       }
@@ -43,11 +43,12 @@ const Home = ({ navigation }) => {
 
   }, [])
 
-  const handleSetPelicula = (obj) => {
-    setPelicula(obj[0])
+ const handleSetPelicula = (obj) => {
+    setPelicula(obj[0]) 
     setPeliculaIsLoaded(true)
   }
-
+ 
+ 
 
   useEffect(() => {
     const collectionRef = collection(db, 'peliculas');
@@ -65,21 +66,19 @@ const Home = ({ navigation }) => {
         }))
       )
     });
-
     return unsuscribe;
 
   }, [])
 
+  //la url se carga, pero se cae al tratar de renderizar con la imagen
   return (
-    !peliculaIsLoaded ? <>Loading app....</> :
+    !peliculaIsLoaded ? <Text>Loading app....</Text> :  //hay que rodearlo de la etiqueta Text, estaba sin eso
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}> {pelicula.titulo} - {pelicula.anyo}</Text>
-
-
         <View style={styles.imageWrapper}>
           <Image
             style={styles.imageFilm}
-            source={pelicula.image}
+            source={{ uri: pelicula.image }}
           />
         </View>
         <View style={styles.centeredView}>
@@ -155,7 +154,7 @@ const styles = StyleSheet.create({
   imageWrapper: {
     width: "100%",
     height: "50%",
-    padding: "10px"
+    padding: 10
   },
   imageFilm: {
     width: "100%",
