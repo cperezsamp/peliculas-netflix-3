@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import * as  React from 'react';
-import { db } from './config/config_bbdd'; 
+import { db } from './config/config_bbdd';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import Navigation from './Navigation';
 
@@ -31,7 +31,7 @@ export default function App() {
       {peliculas.map(pelicula => <Text>{ pelicula.titulo }, { pelicula.id }</Text>)}
       <StatusBar style="auto" />
     </View>*/
-    <Navigation/>
+    <Navigation />
   );
 }
 

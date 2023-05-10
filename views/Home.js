@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,28 +9,63 @@ import {
   Image
 } from 'react-native';
 import { DATA } from "./mockData";
+import { db } from '../config/config_bbdd';
+import { collection, onSnapshot, query } from 'firebase/firestore';
 
-
-const Item = ({ title }) => (
+const Item = ({ actor }) => (
   <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.title}>{actor.nombre}</Text>
     <Image
       style={styles.image}
-      source={require(`../assets/images/films/elpadrino.jpeg`)}
+      source={actor.imagen}
     />
   </View>
 );
 
 const Home = () => {
+
+  const [actores, setActores] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const collectionRef = collection(db, 'actores');
+    const q = query(collectionRef);
+    const unsuscribe = onSnapshot(q, querySnapshot => {
+      setLoading(true)
+      setActores(
+        querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          nombre: doc.data().nombre,
+          clip: doc.data().clip,
+          edad: doc.data().edad,
+          imagen: doc.data().imagen,
+          nacionalidad: doc.data().nacionalidad,
+          nacionalidad: doc.data().nacionalidad,
+          vivo: doc.data().vivo,
+        }))
+      )
+    });
+
+    setLoading(false)
+    return unsuscribe;
+
+  }, [])
+
+
+  if (loading) { console.log('LOADING TRUE') }
+  if (!loading) { console.log('LOADING FALSE') }
+
+  console.log('actores', actores[0]);
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>What do you want to watch?</Text>
-      <Text style={styles.title}>*****Space for SearchBox****</Text>
+      <Text style={styles.title}> Listado de actores de la Película XXXXX</Text>
 
       <FlatList
         numColumns={2}
-        data={DATA}
-        renderItem={({ item }) => <Item film={item} />}
+        data={actores}
+        renderItem={({ item }) => <Item actor={item} />}
         keyExtractor={item => item.id}
       />
 
