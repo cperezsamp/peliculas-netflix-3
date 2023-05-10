@@ -2,40 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Button, Modal, Pressable, Alert, Dimensions } from 'react-native';
 import { db } from '../config/config_bbdd';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 const Detail = ({ navigation, route }) => {
   const [actor, setActor] = useState([]);
-  const [actorReady, setActorReady] = useState(false);
+  const [actorIsLoaded, setActorIsLoaded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleSetActor = (obj) => {
-    setActor(obj)
-    setActorReady(true)
+    setActor(obj[0])
+    setActorIsLoaded(true)
   }
 
   useEffect(() => {
     const collectionRef = collection(db, 'actores');
     const q = query(collectionRef, where('nombre', "==", route.params.nombre));
     const unsuscribe = onSnapshot(q, querySnapshot => {
-      querySnapshot.docs.map(doc => handleSetActor(({
-        id: doc.id,
-        nombre: doc.data().nombre,
-        clip: doc.data().clip,
-        edad: doc.data().edad,
-        imagen: doc.data().imagen,
-        nacionalidad: doc.data().nacionalidad,
-        nacionalidad: doc.data().nacionalidad,
-        vivo: doc.data().vivo,
-      })))
+      handleSetActor(
+        querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          nombre: doc.data().nombre,
+          clip: doc.data().clip,
+          edad: doc.data().edad,
+          imagen: doc.data().imagen,
+          nacionalidad: doc.data().nacionalidad,
+          nacionalidad: doc.data().nacionalidad,
+          vivo: doc.data().vivo,
+        })))
     });
 
     return unsuscribe;
   }, [])
 
   return (
-    !actorReady ? <>Loading actor....</> :
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.text}> Nombre: {actor.nombre}</Text>
+    !actorIsLoaded ? <>Loading actor....</> :
+      <SafeAreaView style={[styles.container, styles.centeredView]}>
+        <Text style={styles.title}> Nombre: {actor.nombre}</Text>
         <View style={styles.imageWrapper}>
           <Image
             style={styles.imageActor}
@@ -43,22 +46,22 @@ const Detail = ({ navigation, route }) => {
             onClick={() => setModalVisible(!modalVisible)}
           />
         </View>
-        <Text style={styles.text}> Edad: {actor.edad}</Text>
-        <Text style={styles.text}> Nacionalidad: {actor.nacionalidad}</Text>
-        <Text style={styles.text}> ¿Está vivo?: {`${actor.vivo ? "Sí" : "No"}`}</Text>
+        <Text style={styles.title}> Edad: {actor.edad}</Text>
+        <Text style={styles.title}> Nacionalidad: {actor.nacionalidad}</Text>
+        <Text style={styles.title}> ¿Está vivo?: {`${actor.vivo ? "Sí" : "No"}`}</Text>
+        <View style={styles.buttonsWrapper}>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => navigation.navigate('Player', { nombre: actor.nombre })}>
+            <Text style={styles.textStyle}>Ver multimedia</Text>
+          </Pressable>
 
-        <Pressable
-          style={[styles.button, styles.buttonClose]}
-          onPress={() => navigation.navigate('Player', { nombre: actor.nombre })}>
-          <Text style={styles.textStyle}>Ver multimedia</Text>
-        </Pressable>
-
-        <Pressable
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}>
-          <Text style={styles.textStyle}>Ver Imagen</Text>
-        </Pressable>
-
+          <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => setModalVisible(true)}>
+            <Text style={styles.textStyle}>Ver Imagen</Text>
+          </Pressable>
+        </View>
         <Modal
           animationType="fade"
           transparent={true}
@@ -68,15 +71,18 @@ const Detail = ({ navigation, route }) => {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}  >
+              <View style={styles.buttonCloseWrapper} >
+                <Pressable
+                  style={[styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Icon name={'close'} color="#E1E1E1" />
+                </Pressable>
+              </View>
               <Image
                 style={styles.imageModal}
                 source={actor.imagen}
               />
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>Cerrar</Text>
-              </Pressable>
+
             </View>
           </View>
         </Modal>
@@ -94,14 +100,17 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  text: {
+
+  title: {
+    fontSize: 17,
     color: "#E1E1E1",
+    marginTop: 10,
+    textAlign: 'center',
   },
   imageWrapper: {
-    width: "100%",
     padding: "10px"
   },
   imageActor: {
@@ -125,16 +134,38 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height
   },
+  buttonsWrapper: {
+    width: 400,
+    display: "flex",
+    flexDirection: "row",
+    display: "flex",
+    gap: "20px",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20
+  },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    width: 150,
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
   buttonClose: {
     backgroundColor: '#2196F3',
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonCloseWrapper: {
+    width: 32,
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginBottom: 10
   },
   textStyle: {
     color: 'white',
