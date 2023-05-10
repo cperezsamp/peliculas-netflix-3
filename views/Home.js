@@ -75,6 +75,7 @@ const Home = ({ navigation }) => {
 
   //la url se carga, pero se cae al tratar de renderizar con la imagen
   return (
+    
     !peliculaIsLoaded ? <Text>Loading app....</Text> :  //hay que rodearlo de la etiqueta Text, estaba sin eso
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}> {pelicula.titulo} - {pelicula.anyo}</Text>
@@ -143,8 +144,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    flex: 1,   
     backgroundColor: "#1F1F1F",
   },
   centeredView: {

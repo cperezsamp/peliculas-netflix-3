@@ -62,6 +62,11 @@ const Detail = ({ navigation, route }) => {
             <Text style={styles.textStyle}>Ver Imagen</Text>
           </Pressable>
         </View>
+        <Pressable
+            style={[styles.button ]}
+            onPress={ ()=> navigation.navigate('Home')}>
+            <Text style={styles.textStyle}>Atras</Text>
+        </Pressable>
         <Modal
           animationType="fade"
           transparent={true}
@@ -82,7 +87,7 @@ const Detail = ({ navigation, route }) => {
                 style={styles.imageModal}
                 source={{ uri: actor.imagen }}
               />
-
+            
             </View>
           </View>
         </Modal>
@@ -94,7 +99,7 @@ const Detail = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+   
     backgroundColor: "#1F1F1F",
 
   },

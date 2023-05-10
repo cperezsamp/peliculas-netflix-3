@@ -9,9 +9,9 @@ const Stack= createNativeStackNavigator();
 function MyStack(){
     return(
         <Stack.Navigator>
-            <Stack.Screen name='Home' component={Home}/>
-            <Stack.Screen name='Detail' component={Detail}/>
-            <Stack.Screen name='Player' component={Player}/>
+            <Stack.Screen name='Home' component={Home} options={{ headerShown: false }}/>
+            <Stack.Screen name='Detail' component={Detail} options={{ headerShown: false }}/>
+            <Stack.Screen name='Player' component={Player} options={{ headerShown: false }}/>
         </Stack.Navigator>
     )
 }
