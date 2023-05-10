@@ -36,13 +36,13 @@ const Detail = ({ navigation, route }) => {
   }, [])
 
   return (
-    !actorIsLoaded ? <>Loading actor....</> :
+    !actorIsLoaded ? <Text>Loading actor....</Text> :
       <SafeAreaView style={[styles.container, styles.centeredView]}>
         <Text style={styles.title}> Nombre: {actor.nombre}</Text>
         <View style={styles.imageWrapper}>
           <Image
             style={styles.imageActor}
-            source={actor.imagen}
+            source={{ uri: actor.imagen }}
             onClick={() => setModalVisible(!modalVisible)}
           />
         </View>
@@ -80,7 +80,7 @@ const Detail = ({ navigation, route }) => {
               </View>
               <Image
                 style={styles.imageModal}
-                source={actor.imagen}
+                source={{ uri: actor.imagen }}
               />
 
             </View>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   imageWrapper: {
-    padding: "10px"
+    padding: 10
   },
   imageActor: {
     width: 250,

@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Pressable, Modal, } from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Pressable, Modal, TouchableWithoutFeedback, } from 'react-native';
 import { db } from '../config/config_bbdd';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { ScrollView } from 'react-native-web';
 
 const Item = ({ actor, navigation }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{actor.nombre}</Text>
-    <Image
-      style={styles.image}
-      source={{ uri: actor.imagen} }
-      onClick={() =>
-        navigation.navigate('Detail', { nombre: actor.nombre })
-      }
-    />
-  </View>
+  <TouchableWithoutFeedback onPress={() =>
+    navigation.navigate('Detail', { nombre: actor.nombre })
+  }>
+    <View style={styles.item}>
+      <Text style={styles.title}>{actor.nombre}</Text>
+      <Image
+        style={styles.image}
+        source={{ uri: actor.imagen} }     
+      />
+    </View>
+  </TouchableWithoutFeedback>
 );
+
 
 const Home = ({ navigation }) => {
 
@@ -75,7 +78,7 @@ const Home = ({ navigation }) => {
     !peliculaIsLoaded ? <Text>Loading app....</Text> :  //hay que rodearlo de la etiqueta Text, estaba sin eso
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}> {pelicula.titulo} - {pelicula.anyo}</Text>
-        <View style={styles.imageWrapper}>
+        <View style={styles.imageWrapper}>  
           <Image
             style={styles.imageFilm}
             source={{ uri: pelicula.image }}
@@ -89,10 +92,10 @@ const Home = ({ navigation }) => {
           </Pressable>
         </View>
         <View style={styles.centeredView}>
-
+        
           <Text style={styles.title}> ACTORES </Text>
         </View>
-
+        
         <View style={styles.centeredView}>
           <FlatList
             style={{
@@ -105,7 +108,7 @@ const Home = ({ navigation }) => {
             keyExtractor={item => item.id}
           />
         </View>
-
+      
         <Modal
           animationType="fade"
           transparent={true}
@@ -129,7 +132,8 @@ const Home = ({ navigation }) => {
             </View>
           </View>
         </Modal>
-      </SafeAreaView>
+        
+      </SafeAreaView> 
   );
 };
 
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     width: "100%",
-    height: "50%",
+    height: "20%",
     padding: 10
   },
   imageFilm: {
