@@ -12,7 +12,7 @@ const Item = ({ actor, navigation }) => (
       <Text style={styles.title}>{actor.nombre}</Text>
       <Image
         style={styles.image}
-        source={{ uri: actor.imagen} }     
+        source={{ uri: actor.imagen }}
       />
     </View>
   </TouchableWithoutFeedback>
@@ -26,32 +26,10 @@ const Home = ({ navigation }) => {
   const [peliculaIsLoaded, setPeliculaIsLoaded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
-    const collectionRef = collection(db, 'actores');
-    const q = query(collectionRef);
-    const unsuscribe = onSnapshot(q, querySnapshot => {
-      setActores(
-        querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          nombre: doc.data().nombre,
-          clip: doc.data().clip,
-          edad: doc.data().edad,
-          imagen: doc.data().imagen,
-          nacionalidad: doc.data().nacionalidad,
-          vivo: doc.data().vivo,
-        }))
-      )
-    });
-    return unsuscribe;
-
-  }, [])
-
- const handleSetPelicula = (obj) => {
-    setPelicula(obj[0]) 
+  const handleSetPelicula = (obj) => {
+    setPelicula(obj[0])
     setPeliculaIsLoaded(true)
   }
- 
- 
 
   useEffect(() => {
     const collectionRef = collection(db, 'peliculas');
@@ -73,13 +51,34 @@ const Home = ({ navigation }) => {
 
   }, [])
 
-  //la url se carga, pero se cae al tratar de renderizar con la imagen
+
+  useEffect(() => {
+    const collectionRef = collection(db, 'actores');
+    const q = query(collectionRef, where('idPelicula', "==", "DOlybUabp06JoqDpj7jp"));
+    const unsuscribe = onSnapshot(q, querySnapshot => {
+      setActores(
+        querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          nombre: doc.data().nombre,
+          clip: doc.data().clip,
+          edad: doc.data().edad,
+          imagen: doc.data().imagen,
+          nacionalidad: doc.data().nacionalidad,
+          vivo: doc.data().vivo,
+        }))
+      )
+    });
+    return unsuscribe;
+
+  }, [])
+
+
   return (
-    
-    !peliculaIsLoaded ? <Text>Loading app....</Text> :  //hay que rodearlo de la etiqueta Text, estaba sin eso
+
+    !peliculaIsLoaded ? <Text>Loading app....</Text> :
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}> {pelicula.titulo} - {pelicula.anyo}</Text>
-        <View style={styles.imageWrapper}>  
+        <View style={styles.imageWrapper}>
           <Image
             style={styles.imageFilm}
             source={{ uri: pelicula.image }}
@@ -93,10 +92,10 @@ const Home = ({ navigation }) => {
           </Pressable>
         </View>
         <View style={styles.centeredView}>
-        
+
           <Text style={styles.title}> ACTORES </Text>
         </View>
-        
+
         <View style={styles.centeredView}>
           <FlatList
             style={{
@@ -109,7 +108,7 @@ const Home = ({ navigation }) => {
             keyExtractor={item => item.id}
           />
         </View>
-      
+
         <Modal
           animationType="fade"
           transparent={true}
@@ -133,8 +132,8 @@ const Home = ({ navigation }) => {
             </View>
           </View>
         </Modal>
-        
-      </SafeAreaView> 
+
+      </SafeAreaView>
   );
 };
 
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    flex: 1,   
+    flex: 1,
     backgroundColor: "#1F1F1F",
   },
   centeredView: {
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 250,
-    marginTop: 10
+    marginTop: 10,
   },
   button: {
     width: 100,
