@@ -12,10 +12,11 @@ export default function Player({navigation}) {
 
       return (
           <View style={styles.container}>
+            <Text style={styles.textStyleHead}>Player</Text>
               <Video
               ref={video}
               style={styles.video}
-              source={require("../assets/media/clip3.mp4")}
+              source={require("../assets/media/ClarkGable.mp4")}
               useNativeControls
               resizeMode="contain"
               isLooping
@@ -46,7 +47,7 @@ export default function Player({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1F1F1F',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -61,7 +62,21 @@ buttonAtras: {
   elevation: 2,
   width: 150,
 },
+textStyle: {
+  color: 'white',
+  fontWeight: 'bold',
+  textAlign: 'center',
+},
+  textStyleHead: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 100,
+  
+},
 button: {
-  margin: 16
+  margin: 16,
+  marginBottom:100,
+  
 }
 });
