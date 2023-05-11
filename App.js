@@ -5,6 +5,8 @@ import { db } from './config/config_bbdd';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import Navigation from './Navigation';
 
+
+
 export default function App() {
 
   /*const [peliculas, setPeliculas]= React.useState([]);
@@ -24,6 +26,7 @@ export default function App() {
     return unsuscribe;
   }, [])*/
 
+  
 
   return (
     /*<View style={styles.container}>

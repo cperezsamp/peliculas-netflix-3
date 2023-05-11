@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Pressable, Modal, TouchableWithoutFeedback, } from 'react-native';
 import { db } from '../config/config_bbdd';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ScrollView } from 'react-native-web';
 
 const Item = ({ actor, navigation }) => (
@@ -73,8 +75,10 @@ const Home = ({ navigation }) => {
   }, [])
 
 
-  return (
 
+
+  return (
+    
     !peliculaIsLoaded ? <Text>Loading app....</Text> :
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}> {pelicula.titulo} - {pelicula.anyo}</Text>
@@ -134,8 +138,11 @@ const Home = ({ navigation }) => {
         </Modal>
 
       </SafeAreaView>
+      
   );
 };
+
+
 
 const styles = StyleSheet.create({
   contentContainer: {
