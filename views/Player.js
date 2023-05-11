@@ -8,6 +8,7 @@ export default function Player({navigation}) {
 
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
+    const videoUrl ='https://firebasestorage.googleapis.com/v0/b/peliculas-netflix-faa3a.appspot.com/o/media%2FClarkGable.mp4?alt=media&token=aefd46b8-3248-478c-900b-6fbaf997959c';
    
 
       return (
@@ -16,7 +17,7 @@ export default function Player({navigation}) {
               <Video
               ref={video}
               style={styles.video}
-              source={require("../assets/media/ClarkGable.mp4")}
+              source={{uri: videoUrl}}
               useNativeControls
               resizeMode="contain"
               isLooping
