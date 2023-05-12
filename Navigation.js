@@ -37,8 +37,9 @@ function HomeLogo() {
 function Header() {
     return (
         <View >
-            <Text>TO HOME</Text>
             <HomeLogo />
+            <Text style={{ zIndex: "9999" }}>TO HOME</Text>
+
         </View>
     )
 }
@@ -46,8 +47,8 @@ function Header() {
 function HeaderDetails() {
     return (
         <View>
-            <Text>TO DETAILS</Text>
             <HomeLogo />
+            <Text style={{ zIndex: "9999" }}>TO DETAILS</Text>
         </View>
     )
 }
