@@ -7,8 +7,6 @@ import { Button, View, Text } from 'react-native';
 import Home from './views/Home';
 import Detail from './views/Detail';
 import Player from './views/Player';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 
 
 
@@ -29,18 +27,9 @@ function Tabs() {
     );
 }
 
-function HomeLogo() {
-    return (
-        <Icon style={{ position: "absolute", left: "150%", top: "-10px" }} name={'home-circle'} color="#E1E1E1" size="34px" onPress={() => { navigation.navigate('Home') }} />
-    );
-}
-
-
 function Header() {
     return (
         <View>
-            <HomeLogo />
-
             <Text>TO HOME</Text>
         </View>
     )
@@ -49,9 +38,6 @@ function Header() {
 function HeaderDetails() {
     return (
         <View>
-            <Text>TO DETAILS</Text>
-            <HomeLogo />
-
             <Text>TO DETAILS</Text>
         </View>
     )
