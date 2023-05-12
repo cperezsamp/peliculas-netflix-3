@@ -30,11 +30,11 @@ const Tab = createBottomTabNavigator();
 
 function HomeLogo() {
     return (
-        <Icon style={{ position: "absolute", left: "150%", top: "-10px" }} name={'home-circle'} color="#E1E1E1" size="34px" onPress={() => { navigation.navigate('Home') }} />
+        <Icon style={{ position: "absolute", width: "80vw", textAlign: "end", top: "-10px" }} name={'home-circle'} color="#E1E1E1" size="34px" onPress={() => { navigation.navigate('Home') }} />
     );
 }
 
-function Header({ navigation }) {
+function Header() {
     return (
         <View >
             <Text>TO HOME</Text>
@@ -59,11 +59,11 @@ function MyStack() {
 
             <Stack.Screen name='Detail' component={Detail} options={{
                 headerTitle: 'Detalles',
-                headerTitle: () => <Header navigation={navigation} />
+                headerTitle: () => <Header />
             }} />
             <Stack.Screen name='Player' component={Player} options={{
                 headerTitle: 'Player',
-                headerTitle: () => <HeaderDetails navigation={navigation} />
+                headerTitle: () => <HeaderDetails />
             }} />
         </Stack.Navigator>
     )
