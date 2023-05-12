@@ -49,6 +49,7 @@ function Header() {
 function HeaderDetails() {
     return (
         <View>
+            <Text>TO DETAILS</Text>
             <HomeLogo />
 
             <Text>TO DETAILS</Text>
