@@ -7,62 +7,74 @@ import { Button, View, Text } from 'react-native';
 import Home from './views/Home';
 import Detail from './views/Detail';
 import Player from './views/Player';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
-const Stack= createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-function Tabs() {
+/* function Tabs() {
     return (
-      <Tab.Navigator screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName = 'home';
-          return <Ionicons name={iconName}/>;
-        },
-      })}>
-        <Tab.Screen name="Home" component={Home} />
-      </Tab.Navigator>
+        <Tab.Navigator screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+                let iconName = 'home';
+                return <Icon name={'close'} color="#E1E1E1" />;
+            },
+        })}>
+            <Tab.Screen name="Home" component={Home} />
+        </Tab.Navigator>
     );
-} 
+} */
 
-function Header(){
-    return(
-    <View>
-        <Text>TO HOME</Text>
-    </View>
+function HomeLogo() {
+    return (
+        <Icon style={{ position: "absolute", left: "150%", top: "-10px" }} name={'home-circle'} color="#E1E1E1" size="34px" onPress={() => { navigation.navigate('Home') }} />
+    );
+}
+
+function Header({ navigation }) {
+    return (
+        <View >
+            <Text>TO HOME</Text>
+            <HomeLogo />
+        </View>
     )
 }
 
-function HeaderDetails(){
-    return(
-    <View>
-        <Text>TO DETAILS</Text>
-    </View>
+function HeaderDetails() {
+    return (
+        <View>
+            <Text>TO DETAILS</Text>
+            <HomeLogo />
+        </View>
     )
 }
 
 function MyStack() {
-    return(
-        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#2196F3' }}}>
-            <Stack.Screen name='Home' component={Home} options={{ headerTitle: 'Pelicula' }}/>
-            <Stack.Screen name='Detail' component={Detail} options={{ headerTitle: 'Detalles', 
-                headerTitle: () => <Header />
+    return (
+        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#2196F3' } }}>
+            <Stack.Screen name='Home' component={Home} options={{ headerTitle: 'Home' }} />
+
+            <Stack.Screen name='Detail' component={Detail} options={{
+                headerTitle: 'Detalles',
+                headerTitle: () => <Header navigation={navigation} />
             }} />
-            <Stack.Screen name='Player' component={Player} options={{ headerTitle: 'Player',
-                headerTitle: () => <HeaderDetails />
-            }}/>
+            <Stack.Screen name='Player' component={Player} options={{
+                headerTitle: 'Player',
+                headerTitle: () => <HeaderDetails navigation={navigation} />
+            }} />
         </Stack.Navigator>
     )
 }
 
 
 
-export default function Navigation(){
-    return(
+export default function Navigation() {
+    return (
         <NavigationContainer>
-                <MyStack /> 
+            <MyStack />
         </NavigationContainer>
     )
 }
