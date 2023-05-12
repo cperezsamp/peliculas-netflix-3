@@ -11,35 +11,37 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
+
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-/* function Tabs() {
+function Tabs() {
     return (
         <Tab.Navigator screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName = 'home';
-                return <Icon name={'close'} color="#E1E1E1" />;
+                return <Ionicons name={iconName} />;
             },
         })}>
             <Tab.Screen name="Home" component={Home} />
         </Tab.Navigator>
     );
-} */
+}
 
 function HomeLogo() {
     return (
-        <Icon style={{ position: "absolute", width: "80vw", textAlign: "end", top: "-10px" }} name={'home-circle'} color="#E1E1E1" size="34px" onPress={() => { navigation.navigate('Home') }} />
+        <Icon style={{ position: "absolute", left: "150%", top: "-10px" }} name={'home-circle'} color="#E1E1E1" size="34px" onPress={() => { navigation.navigate('Home') }} />
     );
 }
 
+
 function Header() {
     return (
-        <View >
+        <View>
             <HomeLogo />
-            <Text style={{ zIndex: "9999" }}>TO HOME</Text>
 
+            <Text>TO HOME</Text>
         </View>
     )
 }
@@ -48,7 +50,8 @@ function HeaderDetails() {
     return (
         <View>
             <HomeLogo />
-            <Text style={{ zIndex: "9999" }}>TO DETAILS</Text>
+
+            <Text>TO DETAILS</Text>
         </View>
     )
 }
@@ -56,8 +59,7 @@ function HeaderDetails() {
 function MyStack() {
     return (
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#2196F3' } }}>
-            <Stack.Screen name='Home' component={Home} options={{ headerTitle: 'Home' }} />
-
+            <Stack.Screen name='Home' component={Home} options={{ headerTitle: 'Pelicula' }} />
             <Stack.Screen name='Detail' component={Detail} options={{
                 headerTitle: 'Detalles',
                 headerTitle: () => <Header />
